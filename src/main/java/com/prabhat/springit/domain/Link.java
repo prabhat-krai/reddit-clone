@@ -52,6 +52,11 @@ public class Link extends Auditable{
         return domain.startsWith("www.") ? domain.substring(4) : domain;
     }
 
+    @OneToMany(mappedBy = "link")
+    private List<Vote> votes = new ArrayList<>();
+
+    private int voteCount = 0;
+
     public String getNameFromEmail() {
         return getCreatedBy().split("@")[0];
     }
