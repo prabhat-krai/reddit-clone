@@ -52,6 +52,10 @@ public class Link extends Auditable{
         return domain.startsWith("www.") ? domain.substring(4) : domain;
     }
 
+    public String getNameFromEmail() {
+        return getCreatedBy().split("@")[0];
+    }
+
     public String getPrettyTime() {
         PrettyTime pt = BeanUtil.getBean(PrettyTime.class);
         return pt.format(convertToDateViaInstant(getCreationDate()));
