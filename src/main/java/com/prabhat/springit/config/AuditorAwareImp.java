@@ -1,7 +1,6 @@
 package com.prabhat.springit.config;
 
 import com.prabhat.springit.domain.User;
-import com.prabhat.springit.security.SecurityConfiguration;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.core.context.SecurityContextHolder;
 
