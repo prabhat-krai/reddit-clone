@@ -2,10 +2,11 @@ package com.prabhat.springit.controller;
 
 import com.prabhat.springit.domain.Comment;
 import com.prabhat.springit.domain.Link;
-import com.prabhat.springit.repository.CommentRepository;
-import com.prabhat.springit.repository.LinkRepository;
+import com.prabhat.springit.domain.User;
+import com.prabhat.springit.repository.UserRepository;
 import com.prabhat.springit.service.CommentService;
 import com.prabhat.springit.service.LinkService;
+import com.prabhat.springit.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.annotation.Secured;
@@ -25,10 +26,12 @@ public class LinkController {
 
     public LinkService linkService;
     public CommentService commentService;
+    public UserService userService;
 
-    public LinkController(LinkService linkService, CommentService commentService) {
+    public LinkController(LinkService linkService, CommentService commentService, UserService userService) {
         this.linkService = linkService;
         this.commentService = commentService;
+        this.userService = userService;
     }
 
     private static final Logger logger = LoggerFactory.getLogger(LinkController.class);
@@ -68,6 +71,9 @@ public class LinkController {
             model.addAttribute("link", link);
             return "link/submit";
         } else {
+            linkService.save(link);
+            Optional<User> user = userService.findByEmail(link.getCreatedBy());
+            user.ifPresent(link::setUser);
             linkService.save(link);
             logger.info("New link was saved successfully");
             redirectAttributes
